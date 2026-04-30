@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}Book Seats - {{ movie.title }}{% endblock %}
+
+{% block content %}
+<div class="booking-container">
+    <div class="booking-header">
+        <h1>{{ movie.title }}</h1>
+        <p class="timing-badge">{{ timing }}</p>
+    </div>
+
+    <div class="theatre-layout">
+        <div class="screen-container">
+            <div class="screen">SCREEN</div>
+        </div>
+        
+        <div class="legend">
+            <div class="legend-item"><div class="seat-legend available"></div> Available</div>
+            <div class="legend-item"><div class="seat-legend booked"></div> Booked</div>
+            <div class="legend-item"><div class="seat-legend selected"></div> Selected</div>
+            <div class="legend-item"><div class="seat-legend held"></div> Held</div>
+            <div class="legend-item"><div class="seat-legend vip"></div> VIP (₹200)</div>
+            <div class="legend-item"><div class="seat-legend normal"></div> Normal (₹100)</div>
+        </div>
+
+        <div class="seat-grid" id="seatGrid">
+            {% set row_labels = ['A', 'B', 'C', 'D', 'E'] %}
+            {% for r in range(5) %}
+                <div class="seat-row">
+                    <div class="row-label">{{ row_labels[r] }}</div>
+                    <div class="seats-in-row">
+                        {% for c in range(8) %}
+                            {% set seat_class = 'available' %}
+                            {% if seats[r][c] == 1 %}
+                                {% set seat_class = 'booked' %}
+                            {% endif %}
+                            
+                            {% set type_class = 'vip' %}
+                            {% if r >= 2 %}
+                                {% set type_class = 'normal' %}
+                            {% endif %}
+                            
+                            <div class="seat {{ seat_class }} {{ type_class }}" 
+                                 data-row="{{ r }}" 
+                                 data-col="{{ c }}"
+                                 data-price="{{ 200 if r < 2 else 100 }}"
+                                 data-label="{{ row_labels[r] }}{{ c+1 }}">
+                                {{ c+1 }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="booking-panel">
+        <div class="summary">
+            <h3>Booking Summary</h3>
+            <p>Selected Seats: <span id="selectedSeatsCount">0</span></p>
+            <p>Seat Numbers: <span id="selectedSeatsLabels">-</span></p>
+            <p class="total-price">Total Amount: ₹<span id="totalPrice">0</span></p>
+        </div>
+        <div class="checkout-form">
+            <button id="confirmBookingBtn" class="btn primary-btn" disabled>Confirm Booking as {{ session.get('username') }}</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Pass backend data to frontend
+    const MOVIE_ID = "{{ movie.id }}";
+    const TIMING = "{{ timing }}";
+</script>
+{% endblock %}

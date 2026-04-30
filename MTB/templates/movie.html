@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}CineTix - {{ movie.title }}{% endblock %}
+
+{% block content %}
+<div class="movie-details-container">
+    <div class="movie-details-header">
+        <div class="poster-wrapper">
+            <img src="{{ url_for('static', filename='images/' + movie.poster) }}" alt="{{ movie.title }}" class="details-poster">
+        </div>
+        <div class="details-text">
+            <h1>{{ movie.title }}</h1>
+            <p class="description">{{ movie.description }}</p>
+            
+            <div class="timings-section">
+                <h2>Select Show Timing</h2>
+                <div class="timings-grid">
+                    {% for t in movie.timings %}
+                    <a href="{{ url_for('book_seats', movie_id=movie.id, timing=t) }}" class="timing-btn">{{ t }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

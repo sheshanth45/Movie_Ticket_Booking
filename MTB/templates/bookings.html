@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}CineTix - All Bookings{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <h1>All Bookings Dashboard</h1>
+        <div class="revenue-card">
+            <h3>Total Revenue</h3>
+            <p class="amount">₹{{ total_revenue }}</p>
+        </div>
+    </div>
+
+    {% if bookings %}
+    <div class="table-responsive">
+        <table class="bookings-table">
+            <thead>
+                <tr>
+                    <th>Booking ID</th>
+                    <th>Name</th>
+                    <th>Movie</th>
+                    <th>Timing</th>
+                    <th>Seats</th>
+                    <th>Amount</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for b in bookings %}
+                <tr>
+                    <td>#{{ b.id }}</td>
+                    <td>{{ b.user_name }}</td>
+                    <td>{{ b.movie_title }}</td>
+                    <td><span class="timing-badge-small">{{ b.timing }}</span></td>
+                    <td>{{ b.seats | join(', ') }}</td>
+                    <td class="font-bold">₹{{ b.total_price }}</td>
+                    <td>
+                        <button class="btn danger-btn cancel-btn" data-booking-id="{{ b.id }}">Cancel</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <div class="empty-icon">🎟️</div>
+        <h2>No bookings yet</h2>
+        <p>Bookings made by users will appear here.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

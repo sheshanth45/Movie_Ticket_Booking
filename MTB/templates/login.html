@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}CineTix - Login{% endblock %}
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <h2>Login to CineTix</h2>
+        <form action="{{ url_for('login') }}" method="POST" class="auth-form">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn primary-btn btn-block">Login</button>
+        </form>
+        <p class="auth-link">Don't have an account? <a href="{{ url_for('register') }}">Register here</a>.</p>
+    </div>
+</div>
+{% endblock %}

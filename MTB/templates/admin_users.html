@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}CineTix - Admin Credentials{% endblock %}
+{% block content %}
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <h1>Registered Users Credentials</h1>
+    </div>
+
+    <div class="table-responsive">
+        <table class="bookings-table">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Password (Plaintext)</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in users %}
+                <tr>
+                    <td>{{ u.username }}</td>
+                    <td><span style="font-family: monospace; color: #f87171;">{{ u.password }}</span></td>
+                    <td>
+                        {% if u.role == 'admin' %}
+                            <span class="timing-badge-small" style="background: #8b5cf6;">Admin</span>
+                        {% else %}
+                            <span class="timing-badge-small">User</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

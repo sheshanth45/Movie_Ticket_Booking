@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}CineTix - Receipt{% endblock %}
+
+{% block content %}
+<div class="receipt-container">
+    <div class="receipt-card">
+        <div class="receipt-header">
+            <h2>🎟️ Booking Confirmed!</h2>
+            <p>Thank you for booking with CineTix.</p>
+        </div>
+        
+        <div class="receipt-body">
+            <div class="receipt-row">
+                <span class="label">Booking ID:</span>
+                <span class="value">#{{ booking.id }}</span>
+            </div>
+            <div class="receipt-row">
+                <span class="label">Name:</span>
+                <span class="value">{{ booking.user_name }}</span>
+            </div>
+            <div class="receipt-row">
+                <span class="label">Movie:</span>
+                <span class="value">{{ booking.movie_title }}</span>
+            </div>
+            <div class="receipt-row">
+                <span class="label">Timing:</span>
+                <span class="value">{{ booking.timing }}</span>
+            </div>
+            <div class="receipt-row">
+                <span class="label">Seats:</span>
+                <span class="value">{{ booking.seats | join(', ') }}</span>
+            </div>
+            <div class="receipt-row total">
+                <span class="label">Total Amount Paid:</span>
+                <span class="value">₹{{ booking.total_price }}</span>
+            </div>
+        </div>
+        
+        <div class="receipt-actions">
+            <button onclick="window.print()" class="btn primary-btn">🖨️ Print Receipt</button>
+            <a href="{{ url_for('all_bookings') }}" class="btn" style="border: 1px solid #475569;">View All Bookings</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
